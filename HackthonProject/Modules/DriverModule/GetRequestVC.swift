@@ -42,7 +42,7 @@ class GetRequestVC: BaseVC {
         
         let driverId = driver?.data()["driverId"]!
         
-        //print("driverId==>",driverId)
+        print("driverId==>",driverId)
         let query = database.collection("job")
                     .whereField("driverId", isEqualTo: driverId)
         

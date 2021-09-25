@@ -10,6 +10,8 @@ import FirebaseFirestore
 
 class DispatcherBoardVC: BaseVC {
 
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
     @IBOutlet weak var tableView: UITableView!
     
     var orders:[QueryDocumentSnapshot] = []
@@ -109,7 +111,6 @@ extension DispatcherBoardVC: UITableViewDataSource, UITableViewDelegate{
             if let error = error {
                 print("Error getting documents: \(error)")
             } else {
-                print("working")
                 
                 if let obj = snapshot?.documents{
                     print("obj===>", obj.count)
@@ -136,7 +137,7 @@ extension DispatcherBoardVC: UITableViewDataSource, UITableViewDelegate{
                 query.document().setData([
                     "jobId"     : random(digits: 10),
                     "assignBy"  : "1001",
-                    "receiveBy" : receiveByRef,
+                    "receiveBy" : docSnapshot.data()["driverId"] ?? 101,
                     "jobStatus" : false,
                     "orderId"   : orderId
                 ]) { err in
@@ -148,8 +149,8 @@ extension DispatcherBoardVC: UITableViewDataSource, UITableViewDelegate{
                 }
             }
         }
-        
-        self.view.toastview(view: self.view, message: "Job has been to send drivers")
+        appDelegate.initLocalNotification(title: "Alert", subTitle: "This Order notified to \(docs.count) drivers")
+        self.view.toastview(view: self.view, message: "This Order notified to \(docs.count) drivers ")
     }
     
     func random(digits:Int) -> String {

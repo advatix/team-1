@@ -18,8 +18,6 @@ class BroardCastRequestVC: BaseVC {
 
         // Do any additional setup after loading the view.
         
-        
-        
         if let order = selectedOrder{
             let orderId = order["orderId"]
             let location    = order["shipFromLocation"] as? GeoPoint
@@ -48,7 +46,7 @@ class BroardCastRequestVC: BaseVC {
     
     func saveDataByRefrence(docs: [QueryDocumentSnapshot]){
 
-        let driverCollection = database.collection("driver")
+        let driverCollection = database.collection("drivers")
 
         var userRef: DocumentReference?
         for docSnapshot in docs {
